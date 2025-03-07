@@ -1796,6 +1796,12 @@ function handleTabRemoved(tabId, removeInfo) {
 	if (gTabs[tabId] && gTabs[tabId].url.startsWith(EXTENSION_URL)) {
 		browser.tabs.update(gPrevActiveTabId, { active: true });
 	}
+
+	// Clean up tab reference to prevent memory leaks
+	// This is especially important on Firefox/Linux where tab references can accumulate
+	if (gTabs[tabId]) {
+		delete gTabs[tabId];
+	}
 }
 
 function handleBeforeNavigate(navDetails) {

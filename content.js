@@ -192,3 +192,18 @@ notifyLoaded();
 
 window.addEventListener("focus", onFocus);
 window.addEventListener("blur", onBlur);
+
+// Clean up DOM elements when the page is unloaded to prevent memory leaks
+window.addEventListener("unload", function() {
+    // Remove timer element if it exists
+    if (gTimer && gTimer.parentNode) {
+        gTimer.parentNode.removeChild(gTimer);
+        gTimer = null;
+    }
+
+    // Remove alert element if it exists
+    if (gAlert && gAlert.parentNode) {
+        gAlert.parentNode.removeChild(gAlert);
+        gAlert = null;
+    }
+});
